@@ -5,7 +5,7 @@ function saveTasks() {
     document.querySelectorAll("#taskList li span").forEach(span => {
         tasks.push(span.innerText);
     });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("newtask", JSON.stringify(tasks));
 }
 
 function loadTasks() {
@@ -34,7 +34,6 @@ function addTaskFromStorage(taskName) {
     let btnDetail = document.createElement("button");
     btnDetail.innerText = "📋 Detail";
     btnDetail.onclick = function () {
-        currentDetailTask = li;
         showDetail(span.innerText);
     };
 
@@ -43,7 +42,7 @@ function addTaskFromStorage(taskName) {
     btnDelete.onclick = function () {
         li.remove();
         saveTasks();
-        if (currentDetailTask === li) hideDetail();
+        if (currentDetailTask === null) hideDetail();
     };
 
     li.appendChild(btnEdit);
@@ -58,7 +57,6 @@ function addTask() {
     if (task === "") return;
 
     addTaskFromStorage(task);
-    saveTasks();
     input.value = "";
 }
 
